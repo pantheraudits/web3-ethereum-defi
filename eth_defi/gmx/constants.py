@@ -238,7 +238,18 @@ EVENT_SIGNATURES = {
 }
 
 # GMX Protocol Constants
+
+#: GMX uses 30-decimal fixed-point arithmetic throughout the protocol.
+#: All OI, liquidity, rate, and price-impact values returned by the REST API
+#: and DataStore contract are integers scaled by ``10 ** PRECISION``.
+#: Divide by ``10 ** PRECISION`` to convert to plain USD / dimensionless floats.
+#:
+#: Reference: https://github.com/gmx-io/gmx-synthetics/blob/main/contracts/utils/Precision.sol
 PRECISION = 30
+
+#: Default upper bound for the binary-search in :func:`find_max_position_size`.
+#: Covers typical GMX market sizes; overridden by ``max_oi_available_usd`` when provided.
+GMX_DEFAULT_SEARCH_MAX_USD: float = 100_000_000.0  # $100 M
 
 #: Ethereum zero address - used as a placeholder for native token (ETH/AVAX) in GMX protocol
 ETH_ZERO_ADDRESS = "0x" + "0" * 40
